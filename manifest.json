@@ -2,7 +2,7 @@
   "name": "My PWA App",
   "short_name": "PWA App",
   "description": "A Progressive Web App version of my website",
-  "start_url": "/index.html",
+  "start_url": "my-pwa-app/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
