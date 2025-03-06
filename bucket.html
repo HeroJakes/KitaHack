@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Your Bucket</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body, html {
+            height: 100%;
+        }
+        
+        .container {
+            position: relative;
+            height: 100vh;
+            background-image: linear-gradient(to right bottom, #79c769, #a0d172, #c2dc7f, #e1e690, #fdf1a4);
+            overflow: hidden; /* Prevents content from overflowing during animation */
+        }
+        
+        .header {
+            padding: 50px 40px;
+            color: white;
+            font-size: 30px;
+            font-weight: 400;
+        }
+        
+        .content {
+            position: absolute;
+            top: 120px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: white;
+            border-top-left-radius: 35px;
+            border-top-right-radius: 35px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            /* Animation properties */
+            transform: translateY(100%);
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .content.active {
+            transform: translateY(0);
+        }
+        
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 100px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .item {
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            padding: 12px;
+            padding-top: 14px;
+            padding-bottom: 14px;
+            margin: 12px 0;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .item-number {
+            position: absolute;
+            left: -10px;
+            top: 14px;
+            width: 30px;
+            height: 30px;
+            background-color: #8BC34A;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .item-line {
+            position: absolute;
+            left: 0px;
+            top: 44px;
+            bottom: 14px;
+            width: 2px;
+            background-color: #8BC34A;
+        }
+        
+        .item-title {
+            color: #4e8440;
+            font-size: 20px;
+            font-weight: bold;
+            margin-left: 26px;
+            margin-bottom: 6px;
+        }
+        
+        .item-details {
+            margin-left: 26px;
+            line-height: 1.4;
+            color: #444;
+            font-size: 14px;
+        }
+        
+        .item-notes {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            margin-left: 26px;
+            font-size: 13px;
+        }
+        
+        .delete-btn {
+            background-color: #f47373;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .add-more-btn {
+            background-color: #8BC34A;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin: 20px auto;
+            display: block;
+            cursor: pointer;
+            font-size: 14px;
+            width: 50%;
+            max-width: 200px;
+            text-align: center;
+        }
+        
+        .button-container {
+            margin-top: 20px;
+            position: sticky;
+            bottom: 0;
+            background-color: white;
+            padding: 15px 0;
+            width: 100%;
+        }
+        
+        .continue-btn {
+            background-color: #4e703a;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            Your Bucket
+        </div>
+        <div class="content">
+            <div class="scrollable-content">
+                <div class="item">
+                    <div class="item-number">1</div>
+                    <div class="item-line"></div>
+                    <div class="item-title">Laptop</div>
+                    <div class="item-details">
+                        Model Name: HUAWEI MateBook D 16<br>
+                        Amount: 20<br>
+                        Condition: Working<br>
+                        Defect: None
+                    </div>
+                    <div class="item-notes">
+                        <span>Additional Notes: None</span>
+                        <button class="delete-btn">delete</button>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="item-number">2</div>
+                    <div class="item-line"></div>
+                    <div class="item-title">Laptop</div>
+                    <div class="item-details">
+                        Model Name: HUAWEI MateBook D 16<br>
+                        Amount: 20<br>
+                        Condition: Working<br>
+                        Defect: None
+                    </div>
+                    <div class="item-notes">
+                        <span>Additional Notes: None</span>
+                        <button class="delete-btn">delete</button>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="item-number">3</div>
+                    <div class="item-line"></div>
+                    <div class="item-title">Laptop</div>
+                    <div class="item-details">
+                        Model Name: HUAWEI MateBook D 16<br>
+                        Amount: 20<br>
+                        Condition: Working<br>
+                        Defect: None
+                    </div>
+                    <div class="item-notes">
+                        <span>Additional Notes: None</span>
+                        <button class="delete-btn">delete</button>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="item-number">4</div>
+                    <div class="item-line"></div>
+                    <div class="item-title">Laptop</div>
+                    <div class="item-details">
+                        Model Name: HUAWEI MateBook D 16<br>
+                        Amount: 20<br>
+                        Condition: Working<br>
+                        Defect: None
+                    </div>
+                    <div class="item-notes">
+                        <span>Additional Notes: None</span>
+                        <button class="delete-btn">delete</button>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="item-number">5</div>
+                    <div class="item-line"></div>
+                    <div class="item-title">Laptop</div>
+                    <div class="item-details">
+                        Model Name: HUAWEI MateBook D 16<br>
+                        Amount: 20<br>
+                        Condition: Working<br>
+                        Defect: None
+                    </div>
+                    <div class="item-notes">
+                        <span>Additional Notes: None</span>
+                        <button class="delete-btn">delete</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-number">6</div>
+                    <div class="item-line"></div>
+                    <div class="item-title">Laptop</div>
+                    <div class="item-details">
+                        Model Name: HUAWEI MateBook D 16<br>
+                        Amount: 20<br>
+                        Condition: Working<br>
+                        Defect: None
+                    </div>
+                    <div class="item-notes">
+                        <span>Additional Notes: None</span>
+                        <button class="delete-btn">delete</button>
+                    </div>
+                </div>
+
+                <button class="add-more-btn">Add More</button>
+            </div>
+            
+            <div class="button-container">
+                <button class="continue-btn">Continue</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Small delay before animation starts
+            setTimeout(function() {
+                // Add the active class to trigger the animation
+                document.querySelector('.content').classList.add('active');
+            }, 300);
+        });
+    </script>
+</body>
+</html>
