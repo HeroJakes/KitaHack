@@ -2,6 +2,9 @@ Team Name: Team Kirby
 Team Member: Lee Zhao Yi, Choong Bee Yee                                     
 University: Asia Pacific University
 
+
+Before using it:
+
 🧠 Chatbot Configuration
 The project requires two key pieces of information to work:
 
