@@ -1,5 +1,5 @@
-Team Name: Team Kirby
-Team Member: Lee Zhao Yi, Choong Bee Yee
+Team Name: Team Kirby 
+Team Member: Lee Zhao Yi, Choong Bee Yee     
 University: Asia Pacific University
 
 🧠 Chatbot Configuration
