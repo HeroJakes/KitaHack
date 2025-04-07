@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="Javascript/main_page.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body,
+      html {
+        height: 100%;
+        background-image: linear-gradient(to bottom, #79c769, #a0d172, #c2dc7f, #e1e690, #fdf1a4);
+      }
+
+      .container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        border-radius: 50px 50px 0 0;
+        padding-bottom: 50px;
+        position: fixed; 
+        top: 80%; 
+        left: 50%;
+        transform: translateX(-50%);
+        transition: top 0.7s ease-out; 
+        z-index: 10;
+        overflow-y: auto; 
+      }
+
+      .container.slide-up {
+        top: 380px; 
+      }
+
+      .top-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 350px;
+        z-index: 10;
+      }
+
+      header {
+        padding: 20px;
+        position: relative;
+        color: white;
+        padding-top: 40px;
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header-text h1 {
+        font-size: 26px;
+        font-weight: 600;
+        font-weight: bold;
+      }
+
+      .header-text p {
+        font-size: 14px;
+        opacity: 0.8;
+      }
+
+      .more-menu {
+        position: relative;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        background-color: #f1f1f1;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        z-index: 100;
+      }
+
+      .three-dots {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 5px;
+        height: 20px;
+      }
+
+      .dot {
+        width: 5px;
+        height: 5px;
+        background-color: #666;
+        border-radius: 50%;
+      }
+
+      .slide-menu {
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        width: 150px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s;
+        z-index: 100;
+      }
+
+      .slide-menu.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        transition: background-color 0.2s;
+        color:rgb(103, 103, 103);
+      }
+
+      .material-icons {
+        color: #1a5018;
+      }
+
+      .menu-item:hover {
+        background-color: rgba(46, 125, 50, 0.1);
+      }
+
+      .menu-item i {
+        margin-right: 10px;
+        font-size: 18px;
+      }
+
+      .menu-item span {
+        font-size: 14px;
+      }
+
+      .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 90;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .menu-overlay.active {
+        visibility: visible;
+        opacity: 1;
+        width: 100%;
+        height: 100%;
+      }
+
+      .recycling-counter {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .radial-progress {
+        position: relative;
+        width: 300px;
+        height: 150px;
+        margin: 0 auto;
+        overflow: hidden;
+        max-width: 100%;
+        height: 200px;
+      }
+
+      .radial-bg,
+      .radial-indicator {
+        cx: 175;
+        cy: 0;
+        r: 145;
+        stroke-linecap: round;
+      }
+
+      .radial-progress svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: rotate(180deg);
+        max-width: 100%;
+        height: 200px;
+      }
+
+      .radial-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.2);
+        stroke-width: 35;
+      }
+
+      .radial-indicator {
+        fill: none;
+        stroke: white;
+        stroke-width: 35;
+        stroke-dasharray: 314;
+        stroke-dashoffset: 314;
+        transition: stroke-dashoffset 0.5s ease;
+      }
+
+      .radial-content {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        width: 100%;
+      }
+
+      .radial-content h2 {
+        font-size: 50px;
+        font-weight: 600;
+        margin-bottom: -10px; 
+        margin-top: 40px;
+        position: relative;
+        z-index: 10;
+      }
+
+      .radial-content p {
+        font-size: 11px;
+        opacity: 0.8;
+        margin-bottom: 15px;
+      }
+
+      .view-analytics {
+        color: white;
+        text-decoration: underline;
+        font-size: 14px;
+        display: block;
+      }
+
+      .action-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        padding: 30px;
+        padding-top: 50px;
+      }
+
+      .action-card {
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        max-height: 280px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+
+      .tracking-card {
+        background-color: #212521;
+        color: white;
+      }
+
+      .recycle-card {
+      background: url('user-image/test2.png') no-repeat center center;
+      background-size: 100% 100%; 
+      color: black;
+      }
+
+      .action-card h3 {
+        font-size: 22px;
+        font-weight: 450;
+        margin-bottom: 10px;
+      }
+
+      .action-card p {
+        font-size: 13px;
+        opacity: 0.7;
+        margin-bottom: 15px;
+      }
+
+      .action-button {
+        width: 100%;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border: none;
+        border-radius: 30px;
+        font-weight: 500;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .tracking-button {
+        background-color: #4caf50;
+        color: white;
+        font-size: 12px;
+      }
+
+      .recycle-button {
+        background-color: #2e7d32;
+        color: white;
+        font-size: 12px;
+      }
+
+      .bottom-nav {
+        position: fixed; 
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        border-radius: 30px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        z-index: 20;
+    }
+
+
+      .nav-items-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 10px;
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border:none;
+        color: #888;
+        transition: color 0.3s ease;
+        opacity: 0.6;
+        width: 50px;
+        text-align: center;
+        padding: 12px;
+        border-radius: 30px;
+
+      }
+
+      .nav-item:hover,
+      .nav-item.active {
+        color: #2e7d32;
+        opacity: 1;
+        background-color: rgba(46, 125, 50, 0.1);
+      }
+
+      .nav-item svg {
+        width: 24px;
+        height: 24px;
+        stroke-width: 1.5;
+      }
+
+      .nav-item span {
+        display: none;
+      }
+
+      .add-button {
+        background-color: #2e7d32;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border:none;
+        color: white;
+        box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+        position: relative;
+        transition: transform 0.2s ease;
+      }
+
+      .add-button:hover {
+        transform: scale(1.05);
+      }
+
+      .decorative-element {
+        position: absolute;
+        top: 140%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 420px;
+        z-index: 5;
+        opacity: 50%;
+      }
+    </style>
+    <title>Poyo Waste</title>
+    <style>
+      
+    </style>
+  </head> 
+  <body>
+    <div class="top-section">
+      <header>
+        <div class="header-content">
+          <div class="header-text">
+            <h1>Loading...</h1>
+            <p>Loading...</p>
+          </div>
+          <div class="more-menu" id="more-menu">
+            <div class="three-dots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <div class="slide-menu" id="slide-menu">
+              <div class="menu-item" id="analytics-btn">
+                <i class="material-icons">analytics</i>
+                <span>Analytics</span>
+              </div>
+              <div class="menu-item" id="chatbot-btn">
+                <i class="material-icons">chat</i>
+                <span>Chatbot</span>
+              </div>
+              <div class="menu-item" id="reward-btn">
+                <i class="material-icons">emoji_events</i>
+                <span>Rewards</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="menu-overlay" id="menu-overlay"></div>
+
+      <div class="recycling-counter">
+        <div class="radial-progress">
+          <svg width="350" height="175" viewBox="0 0 350 175">
+            <circle class="radial-bg" cx="200" cy="0" r="150" />
+            <circle
+              class="radial-indicator"
+              cx="200"
+              cy="0"
+              r="150"
+              stroke-dashoffset="196"
+            />
+          </svg>
+          <img
+            src="user-image/indicator.png"
+            alt="Decorative Element"
+            class="decorative-element"
+          />
+        </div>
+        <div class="radial-content">
+          <h2>0</h2>
+          <p>items recycled this month</p>
+          <a href="#" class="view-analytics">view analytics ></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="action-cards">
+        <div class="action-card tracking-card">
+          <div>
+            <h3>Tracking <br />e-waste?</h3>
+            <p>Track and regular Updates on its status.</p>
+          </div>
+          <button class="action-button tracking-button" id="track-btn">Track</button>
+        </div>
+        <div class="action-card recycle-card">
+          <div>
+            <h3>Want to recycle?</h3>
+            <p>
+              Deliver your E-waste and Renew it
+              sustainably.
+            </p>
+          </div>
+          <button class="action-button recycle-button" id="recycle-btn">Recycle</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-items-container">
+        <button class="nav-item active" id="home-btn">
+          <img src="user-image/home.png" alt="Home" width="24" height="24" />
+          <span>Home</span>
+        </button>
+        <button class="nav-item" id="chat-btn">
+          <img src="user-image/chat.png" alt="Chat" width="24" height="24" />
+          <span>Chat</span>
+        </button>
+        <button class="add-button">
+          <img src="user-image/plus.png" alt="Add" width="24" height="24" />
+        </button>
+        <button class="nav-item" id="tracking-btn">
+          <img
+            src="user-image/tracking.png"
+            alt="List"
+            width="24"
+            height="24"
+          />
+          <span>List</span>
+        </button>
+        <button class="nav-item" id="user-btn">
+          <img
+            src="user-image/profile.png"
+            alt="Profile"
+            width="24"
+            height="24"
+          />
+          <span>Profile</span>
+        </button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-auth-compat.js"></script>
+
+      <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDgoc4Zx064nL1iydJbccI692HDpu8gLLE",
+        authDomain: "capstone-project-312dc.firebaseapp.com",
+        projectId: "capstone-project-312dc",
+        storageBucket: "capstone-project-312dc.appspot.com",
+        messagingSenderId: "82712440613",
+        appId: "1:82712440613:web:124a86e48a3b9c3e6bf4cc",
+        measurementId: "G-YFF9RVYJ9C",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      const getCurrentUserId = () => {
+        return firebase.auth().currentUser ? firebase.auth().currentUser.uid : null;
+      };
+
+
+      const getFirstDayOfMonth = () => {
+        const now = new Date();
+        return new Date(now.getFullYear(), now.getMonth(), 1);
+      };
+
+
+      const updateRecyclingCount = async () => {
+        const userId = getCurrentUserId();
+        
+        if (!userId) {
+          console.error("No user is signed in");
+          return;
+        }
+        
+        const firstDayOfMonth = getFirstDayOfMonth();
+        
+        try {
+          const scheduledQuery = db.collection('inventory')
+            .where('uid', '==', userId)
+            .where('status', '==', 'Scheduled')
+            .where('createdAt', '>=', firstDayOfMonth);
+          
+          const onDeliveryQuery = db.collection('inventory')
+            .where('uid', '==', userId)
+            .where('status', '==', 'On Delivery')
+            .where('createdAt', '>=', firstDayOfMonth);
+          
+          const deliveredQuery = db.collection('inventory')
+            .where('uid', '==', userId)
+            .where('status', '==', 'Delivered')
+            .where('createdAt', '>=', firstDayOfMonth);
+          
+          const processedQuery = db.collection('inventory')
+            .where('uid', '==', userId)
+            .where('status', '==', 'Processed')
+            .where('createdAt', '>=', firstDayOfMonth);
+          
+          const [scheduledSnapshot, onDeliverySnapshot, deliveredSnapshot, processedSnapshot] = await Promise.all([
+            scheduledQuery.get(),
+            onDeliveryQuery.get(),
+            deliveredQuery.get(),
+            processedQuery.get()
+          ]);
+          
+          const waitingForPickupCount = scheduledSnapshot.size;
+          const onDeliveryCount = onDeliverySnapshot.size;
+          const deliveredCount = deliveredSnapshot.size;
+          const processedCount = processedSnapshot.size;
+          
+          const totalRecycledItems = waitingForPickupCount + onDeliveryCount + deliveredCount + processedCount;
+          
+          updateUI(totalRecycledItems);
+          
+          console.log("Recycling count updated:", totalRecycledItems);
+          
+        } catch (error) {
+          console.error("Error fetching recycling count:", error);
+        }
+      };
+
+
+      const updateUI = (totalItems) => {
+        const countElement = document.querySelector('.radial-content h2');
+        if (countElement) {
+          countElement.textContent = totalItems;
+        }
+
+        updateProgressCircle(totalItems);
+      };
+
+      const updateProgressCircle = (totalItems) => {
+        const circle = document.querySelector('.radial-indicator');
+        if (!circle) return;
+      
+        const goal = 50;
+        const percentage = Math.min(totalItems / goal, 1);
+      
+        const circumference = 2 * Math.PI * 150;
+        const dashOffset = circumference * (1 - percentage);
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = dashOffset;
+      };
+
+
+      window.addEventListener('load', function() {
+
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          const headerTitle = document.querySelector('.header-text h1');
+          const headerSubtitle = document.querySelector('.header-text p');
+          
+          db.collection('users').doc(user.uid).get()
+            .then((doc) => {
+              if (doc.exists && doc.data().fullname) {
+                // Use the full name from your database
+                const fullName = doc.data().fullname;
+                headerTitle.textContent = `Hello, ${fullName}`;
+              } else {
+                // Fallback to displayName if no custom name is found
+                headerTitle.textContent = `Hello, ${user.displayName || 'User'}`;
+              }
+              headerSubtitle.textContent = 'Welcome to Poyo Waste';
+            })
+            .catch((error) => {
+              console.error("Error fetching user data:", error);
+              // Fallback in case of error
+              headerTitle.textContent = `Hello, ${user.displayName || 'User'}`;
+              headerSubtitle.textContent = 'Welcome to Poyo Waste';
+            });
+          
+          updateRecyclingCount();
+          } else {
+            console.log("User is not signed in");
+          }
+        });
+      });
+
+        document.addEventListener('DOMContentLoaded', function() {
+          const addButton = document.querySelector('.add-button');
+          const moreMenu = document.getElementById('more-menu');
+          const slideMenu = document.getElementById('slide-menu');
+          const menuOverlay = document.getElementById('menu-overlay');
+          const analyticsBtn = document.getElementById('analytics-btn');
+          const chatbotBtn = document.getElementById('chatbot-btn');
+          const rewardBtn = document.getElementById('reward-btn');
+      
+          moreMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+            slideMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+          });
+          
+          menuOverlay.addEventListener('click', function() {
+            slideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+          });
+          
+          analyticsBtn.addEventListener('click', function() {
+            window.location.href = 'analytic.html';
+          });
+          
+          chatbotBtn.addEventListener('click', function() {
+            window.location.href = 'chatbot.html';
+          });
+          
+          rewardBtn.addEventListener('click', function() {
+            window.location.href = 'reward.html';
+          });
+      
+          addButton.addEventListener('touchstart', function() {
+            window.location.href = 'bucket.html';
+          });
+      
+          document.getElementById("chat-btn").addEventListener("touchstart", function() {
+            window.location.href = "chat_list.html"; 
+          });
+
+          document.getElementById("logout-btn").addEventListener("touchstart", function() {
+
+          localStorage.removeItem("userSession");
+    
+
+          auth.signOut().then(() => {
+              window.location.href = "index.html";
+          }).catch((error) => {
+              console.error("Error during logout:", error);
+          });
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+              const addButton = document.querySelector(".add-button");
+              const homeBtn = document.getElementById("home-btn");
+              const chatBtn = document.getElementById("chat-btn");
+              const trackingBtn = document.getElementById("tracking-btn");
+              const userBtn = document.getElementById("user-btn"); 
+
+              if (homeBtn) {
+                homeBtn.addEventListener("touchstart", function () {
+                  window.location.href = "main_page.html";
+                });
+              }
+
+              if (chatBtn) {
+                chatBtn.addEventListener("touchstart", function () {
+                  window.location.href = "chat_list.html";
+                });
+              }
+
+              if (addButton) {
+                addButton.addEventListener("touchstart", function () {
+                  window.location.href = "bucket.html";
+                });
+              }
+
+              if (trackingBtn) {
+                trackingBtn.addEventListener("touchstart", function () {
+                  window.location.href = "tracking.html";
+                });
+              }
+
+              if (userBtn) { 
+                userBtn.addEventListener("touchstart", function () {
+                  window.location.href = "profile.html";
+                });
+              }
+            }); 
+      </script>
+  </body>
+</html>
